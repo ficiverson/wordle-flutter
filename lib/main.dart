@@ -17,12 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Wordle Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: const MyHomePage(title: 'Wordle de convivientes'),
+      home: const MyHomePage(title: 'Wordle with Flutter'),
     );
   }
 }
@@ -221,14 +221,12 @@ class _MyHomePageState extends State<MyHomePage> {
         () => _showDialog
             ? _showAlert(
                 context,
-                playDay ? DialogType.QUESTION : DialogType.INFO,
-                playDay ? "Atención pista" : "Hoy no hay pista",
-                playDay
-                    ? "Hoy puedes conocer una nueva pista :)"
-                    : "Hoy juegas por diversión :)") : null);
+                DialogType.INFO,
+                "Lets play",
+                 "You need to guess the word. Its in Spanish!!"): null);
     return Scaffold(
         appBar: AppBar(
-          actions: [IconButton(
+          actions: playDay? [] : [IconButton(
             icon: Icon(
               Icons.replay,
               color: Colors.black,
@@ -358,25 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ["", "", "", "", ""]
     ];
 
-    if (_compareDates(DateTime(2022, 1, 15))) {
-      playDay = true;
-      solution = "jugar".toUpperCase();
-    } else if (_compareDates(DateTime(2022, 1, 17))) {
-      playDay = true;
-      solution = "notas".toUpperCase();
-    } else if (_compareDates(DateTime(2022, 1, 19))) {
-      playDay = true;
-      solution = "besos".toUpperCase();
-    } else if (_compareDates(DateTime(2022, 1, 21))) {
-      playDay = true;
-      solution = "luces".toUpperCase();
-    } else if (_compareDates(DateTime(2022, 1, 23))) {
-      playDay = true;
-      solution = "silla".toUpperCase();
-    } else {
-      playDay = false;
-      solution = rae[Random().nextInt(rae.length)].toUpperCase();
-    }
+    solution = rae[Random().nextInt(rae.length)].toUpperCase();
     print(solution);
   }
 
@@ -397,6 +377,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _showAlert(BuildContext context, DialogType type, String title, String desc) {
+    _showDialog = false;
     AwesomeDialog(
       context: context,
       dialogType: type,
@@ -466,12 +447,10 @@ class _MyHomePageState extends State<MyHomePage> {
               _showAlert(context,correct.entries.length == 5
                   ? DialogType.SUCCES
                   : DialogType.QUESTION,
-                  correct.entries.length == 5 ? "Bieeeen" : "Ooooh",
-                  correct.entries.length == 5
-                      ? playDay
-                      ? "$solution es una pista válida"
-                      : "$solution no es una pista pero lo hiciste genial :)"
-                      : "No sacamos nada en claro");
+                  correct.entries.length == 5 ? "Yeeeesssss" : "Ooooh",
+                  correct.entries.length == 5 ?
+                      "$solution You did it! :)"
+                      : "Sorry for that. You can reload the game with another word in the top bar");
             } else {
               currentWord = currentWord + 1;
             }
