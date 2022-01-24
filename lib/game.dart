@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       onTap: () async {
                         final SharedPreferences prefs = await _prefs;
                         int currentScore =  prefs.getInt("current_score") != null? prefs.getInt("current_score")!: 0;
-                        prefs.setInt("current_score", currentScore - 15);
+                        prefs.setInt("current_score", currentScore - 75);
                         _showAlert(
                             context,
                             DialogType.QUESTION,
