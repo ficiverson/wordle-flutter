@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Google Play game services IDs. Save this file as res/values/games-ids.xml in your project.-->
+<resources>
+    <!--app_id-->
+    <string name="app_id" translatable="false">107196563594</string>
+    <!--package_name-->
+    <string name="package_name" translatable="false">com.coruna.enjoy</string>
+    <!--leaderboard Clasificación de Xerión-->
+    <string name="leaderboard_clasificacin_de_xerin" translatable="false">CgkIioGnq48DEAIQAQ</string>
+</resources>
