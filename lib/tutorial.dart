@@ -96,9 +96,9 @@ class _TutorialPageState extends State<TutorialPage> {
           Container(
             width: double.infinity,
             child: Text(
-              '\nYa estás lista para continuar jugando'
-                  '\n\nRecuerda que Xerión te dará algunas pistas pero te cobrará su ayuda con algunos puntos.'
-                  '\n\nCada vez que falles perderás puntos.'
+              '\nYa puedes continuar jugando'
+                  '\n\nRecuerda que Xerión te dará algunas pistas pero te cobrará su ayuda con muchos puntos.'
+                  '\n\nCada vez que falles perderás algunos puntos.'
                   '\n\nUna palabra al día.',
               style: TextStyle(
                 color: Color(0xFF202020),
