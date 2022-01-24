@@ -124,7 +124,7 @@ class _TutorialPageState extends State<TutorialPage> {
           SizedBox(height: 50),
           Container(
               width: double.infinity,
-              child: Text('¿Eres la coruñesa que mas sabe?',
+              child: Text('¿Eres CTV?',
                   style: TextStyle(
                     fontSize: 23.0,
                     wordSpacing: 1,
@@ -240,9 +240,8 @@ class _TutorialPageState extends State<TutorialPage> {
           Container(
             width: double.infinity,
             child: Text(
-              '\nYa estás lista para participar en el reto al que juega toda la ciudad. ¿Podrás batir a Xerión?'
-                  '\n\nCrea tu cuenta y que tengas suerte.'
-              '\n\nRecuerda que Xerión te dará algunas pistas pero te cobrará su ayuda con puntos. Cada vez que falles perderás puntos.',
+              '\nYa está todo listo para participar en el reto al que juega toda la ciudad. ¿Podrás batir a Xerión?'
+              '\n\nRecuerda que Xerión te dará algunas pistas pero te cobrará su ayuda con algunos puntos. Cada vez que falles perderás puntos.',
               style: TextStyle(
                 color: Color(0xFF202020),
                 letterSpacing: 0.7,

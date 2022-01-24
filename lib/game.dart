@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:games_services/games_services.dart';
-import 'package:onboarding/onboarding.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.dart';
@@ -19,7 +18,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String text = "";
   String solution = "planta".toUpperCase();
   int currentWord = 0;
@@ -37,7 +36,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     _initTheGame();
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("resumed");
+        final SharedPreferences prefs = await _prefs;
+        int currentDayPlaying = prefs.getInt("current_day_playing")!= null? prefs.getInt("current_day_playing")!:0;
+        if(currentDayPlaying < _dayOfTheyear()){
+          prefs.setBool("arrays_contains_junk",true);
+          _initTheGame();
+        }
+        break;
+      case AppLifecycleState.paused:
+        print("paused");
+        break;
+      default:
+        break;
+    }
   }
 
   @override
@@ -67,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    Share.share('¿Conoces el reto de Xerión? https://ficiverson.github.io/xerion-web/');
+                    Share.share("🟦🟦🟦🟦🟦🟦🟦🟦🟦\n🟦🟦⬜⬜⬜⬜⬜🟦🟦\n🟦⬜⬜⬜⬜⬜⬜⬜🟦\n🟦⬜🟦⬜⬜⬜🟦⬜🟦\n🟦⬜⬜⬜🟦⬜⬜⬜🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦🟦🟦🟦⬜🟦🟦🟦🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦🟦🟦🟦🟦🟦🟦🟦\n\n¿Conoces el reto de Xerión? \n\nhttps://ficiverson.github.io/xerion-web/");
                   },
                 ),
                 IconButton(
@@ -111,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onTap: () async {
                         final SharedPreferences prefs = await _prefs;
                         int currentScore =  prefs.getInt("current_score") != null? prefs.getInt("current_score")!: 0;
-                        prefs.setInt("current_score", currentScore - 10);
+                        prefs.setInt("current_score", currentScore - 15);
                         _showAlert(
                             context,
                             DialogType.QUESTION,
@@ -119,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             raeXerion[_dayOfTheyear() % raeXerion.length]);
                       }, // Image tapped
                       child: Container(
-                          height: 40, child: Image.asset('xerion_icon.png')))
+                          height: 40, child: Image.asset('xerion.png')))
                 ],
               ),
             ),
@@ -249,9 +275,9 @@ class _MyHomePageState extends State<MyHomePage> {
         colors.add(subColorList);
         characters.add(subCharactersList);
       }
-      print(solution);
       final SharedPreferences prefs = await _prefs;
       canPlay = prefs.getInt("last_day_played") != _dayOfTheyear();
+      prefs.setInt("current_day_playing", _dayOfTheyear());
       bool restored =false;
       //restore previous game
       if(prefs.getBool("arrays_contains_junk") == false && canPlay){

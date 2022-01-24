@@ -32,7 +32,6 @@ flutter:
 
   uses-material-design: true
   assets:
-    - xerion_icon.png
     - final1.png
     - final2.png
     - final3.png

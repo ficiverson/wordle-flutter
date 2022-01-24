@@ -6,6 +6,7 @@ import 'package:loading/indicator/line_scale_party_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wordleconvivientes/rae.dart';
 import 'package:wordleconvivientes/tutorial.dart';
 
 import 'game.dart';
