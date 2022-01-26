@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Wordle Demo',
+      title: 'Xerion',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,11 +22,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-//TODO
-//configurar juegos remotos en gp y app
-
-//palbra contenida en el array o no evaluar???

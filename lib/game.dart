@@ -52,9 +52,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         print("resumed");
         final SharedPreferences prefs = await _prefs;
-        int currentDayPlaying = prefs.getInt("current_day_playing")!= null? prefs.getInt("current_day_playing")!:0;
-        if(currentDayPlaying < _dayOfTheyear()){
-          prefs.setBool("arrays_contains_junk",true);
+        int currentDayPlaying = prefs.getInt("current_day_playing") != null
+            ? prefs.getInt("current_day_playing")!
+            : 0;
+        if (currentDayPlaying < _dayOfTheyear()) {
+          prefs.setBool("arrays_contains_junk", true);
           _initTheGame();
         }
         break;
@@ -77,14 +79,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               actions: [
                 IconButton(
                   icon: Icon(
-                    Icons.leaderboard_outlined,
+                    Icons.settings_applications_outlined,
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    _checkSignInStatus();
-                    await GamesServices.showLeaderboards(
-                        androidLeaderboardID: "CgkIioGnq48DEAIQAQ",
-                        iOSLeaderboardID: 'coruna_leaderboard_id');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()),
+                    );
                   },
                 ),
                 IconButton(
@@ -93,19 +95,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    Share.share("🟦🟦🟦🟦🟦🟦🟦🟦🟦\n🟦🟦⬜⬜⬜⬜⬜🟦🟦\n🟦⬜⬜⬜⬜⬜⬜⬜🟦\n🟦⬜🟦⬜⬜⬜🟦⬜🟦\n🟦⬜⬜⬜🟦⬜⬜⬜🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦🟦🟦🟦⬜🟦🟦🟦🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦🟦🟦🟦🟦🟦🟦🟦\n\n¿Conoces el reto de Xerión? \n\nhttps://ficiverson.github.io/xerion-web/");
+                    Share.share(
+                        "¿Conoces el reto de Xerión? \n\nhttps://fernandosouto.dev/xerion.html \n\n🟦🟦🟦🟦🟦🟦🟦🟦🟦\n🟦🟦⬜⬜⬜⬜⬜🟦🟦\n🟦⬜⬜⬜⬜⬜⬜⬜🟦\n🟦⬜🟦⬜⬜⬜🟦⬜🟦\n🟦⬜⬜⬜🟦⬜⬜⬜🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦🟦🟦🟦⬜🟦🟦🟦🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦🟦🟦🟦🟦🟦🟦🟦");
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.settings_applications_outlined,
+                  icon: Icon(
+                    Icons.leaderboard_outlined,
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingsPage()),
-                    );
+                    _checkSignInStatus();
+                    await GamesServices.showLeaderboards(
+                        androidLeaderboardID: "CgkIioGnq48DEAIQAQ",
+                        iOSLeaderboardID: 'coruna_leaderboard_id');
                   },
                 )
               ],
@@ -130,22 +133,29 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  _getTopContainers(),
-                  _getKeyboard(),
-                  //SizedBox(height: 40),
-                  GestureDetector(
-                      onTap: () async {
-                        final SharedPreferences prefs = await _prefs;
-                        int currentScore =  prefs.getInt("current_score") != null? prefs.getInt("current_score")!: 0;
-                        prefs.setInt("current_score", currentScore - 75);
-                        _showAlert(
-                            context,
-                            DialogType.QUESTION,
-                            "Xerión te ayuda:",
-                            raeXerion[_dayOfTheyear() % raeXerion.length]);
-                      }, // Image tapped
-                      child: Container(
-                          height: 40, child: Image.asset('xerion.png')))
+                  Stack(children: [
+                    _getTopContainers(),
+                    GestureDetector(
+                        onTap: () async {
+                          final SharedPreferences prefs = await _prefs;
+                          int currentScore =
+                              prefs.getInt("current_score") != null
+                                  ? prefs.getInt("current_score")!
+                                  : 0;
+                          prefs.setInt("current_score", currentScore - 75);
+                          _showAlert(
+                              context,
+                              DialogType.QUESTION,
+                              "Xerión te ayuda:",
+                              raeXerion[_dayOfTheyear() % raeXerion.length]);
+                        }, // Image tapped
+                        child: Container(
+                            margin: EdgeInsets.fromLTRB(
+                                queryData.size.width / 2 - 25, solution.length>4 ? Platform.isIOS ? 430.0 : 390.0 : Platform.isIOS ? 420 : 380.0, 0.0, 0.0),
+                            height: 50,
+                            child: Image.asset('xerion.png')))
+                  ]),
+                  _getKeyboard()
                 ],
               ),
             ),
@@ -172,7 +182,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget _getTopContainers() {
     return Container(
         color: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 0.0),
+        padding: EdgeInsets.fromLTRB(solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 10.0,
+            solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 0.0),
         key: PageStorageKey<String>("grid"),
         width: queryData.size.width,
         height: Platform.isIOS ? 480 : 440,
@@ -180,8 +191,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             physics: NeverScrollableScrollPhysics(),
             itemCount: solution.length * (solution.length + 1),
             gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 1.0,
-                crossAxisSpacing: 1.0,
+                mainAxisSpacing: 0.1,
+                crossAxisSpacing: 0.1,
                 childAspectRatio: 1.0,
                 crossAxisCount: solution.length),
             itemBuilder: (BuildContext context, int index) {
@@ -278,14 +289,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       final SharedPreferences prefs = await _prefs;
       canPlay = prefs.getInt("last_day_played") != _dayOfTheyear();
       prefs.setInt("current_day_playing", _dayOfTheyear());
-      bool restored =false;
+      bool restored = false;
       //restore previous game
-      if(prefs.getBool("arrays_contains_junk") == false && canPlay){
+      if (prefs.getBool("arrays_contains_junk") == false && canPlay) {
         colors.clear();
         characters.clear();
-        for(var k = 0 ; k < solution.length + 1; k ++) {
-          if(prefs.getStringList("colors_array_$k")!=null) {
-            colors.add(prefs.getStringList("colors_array_$k")!.map((e) => int.parse(e)).toList());
+        for (var k = 0; k < solution.length + 1; k++) {
+          if (prefs.getStringList("colors_array_$k") != null) {
+            colors.add(prefs
+                .getStringList("colors_array_$k")!
+                .map((e) => int.parse(e))
+                .toList());
           } else {
             List<int> subColorList = [];
             for (var j = 0; j < solution.length; j++) {
@@ -294,8 +308,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             colors.add(subColorList);
           }
         }
-        for(var k = 0 ; k < solution.length + 1; k ++) {
-          if(prefs.getStringList("characters_array_$k")!=null) {
+        for (var k = 0; k < solution.length + 1; k++) {
+          if (prefs.getStringList("characters_array_$k") != null) {
             characters.add(prefs.getStringList("characters_array_$k")!);
           } else {
             List<String> subCharactersList = [];
@@ -305,7 +319,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             characters.add(subCharactersList);
           }
         }
-        if(prefs.getInt("current_word_restored")!=null) {
+        if (prefs.getInt("current_word_restored") != null) {
           currentWord = prefs.getInt("current_word_restored")!;
         }
 
@@ -316,12 +330,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       }
 
       //show a dialog to play or vaites hoy ya jugaste
-      if(!restored) {
+      if (!restored) {
         canPlay
             ? _showAlert(context, DialogType.INFO, "Vamos a jugar",
-            "Adivina la palabra del hoy")
+                "Adivina la palabra del hoy")
             : _showAlert(context, DialogType.INFO, "Hoy ya jugaste",
-            "Tendrás que volver mañana para seguir jugando");
+                "Tendrás que volver mañana para seguir jugando");
       }
       setState(() {
         loadingGame = false;
@@ -413,19 +427,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               //save the date
               prefs.setInt("last_day_played", _dayOfTheyear());
 
-              int currentScore =  prefs.getInt("current_score") != null? prefs.getInt("current_score")!: 0;
-              if (solution.isNotEmpty &&
-                  correct.entries.length == solution.length) {
-                _checkSignInStatus();
-                await GamesServices.submitScore(
-                    score: Score(
-                        androidLeaderboardID: 'CgkIioGnq48DEAIQAQ',
-                        iOSLeaderboardID: 'coruna_leaderboard_id',
-                        value: currentScore + 100));
-              } else {
-                prefs.setInt("current_score", currentScore - 25);
-              }
-
+              //solution alert
               _showAlert(
                   context,
                   correct.entries.length == solution.length
@@ -438,26 +440,44 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       ? "Enhorabuena!! $solution era la solución 🎉"
                       : "Lo siento. $solution era la solución. Vuelve mañana 😊");
 
+              //save data for solution
+              int currentScore = prefs.getInt("current_score") != null
+                  ? prefs.getInt("current_score")!
+                  : 0;
+              if (solution.isNotEmpty &&
+                  correct.entries.length == solution.length) {
+                _checkSignInStatus();
+                currentScore = currentScore + 100;
+                prefs.setInt("current_score", currentScore);
+                await GamesServices.submitScore(
+                    score: Score(
+                        androidLeaderboardID: 'CgkIioGnq48DEAIQAQ',
+                        iOSLeaderboardID: 'coruna_leaderboard_id',
+                        value: currentScore));
+              } else {
+                prefs.setInt("current_score", currentScore - 25);
+              }
+
+              //remove current selections from prefs to restore
+              prefs.setBool("arrays_contains_junk", true);
+
               //reload the interface
               setState(() {
                 endGame = true;
                 canPlay = false;
               });
-
-              //remove current selections from prefs to restore
-              prefs.setBool("arrays_contains_junk", true);
-
             } else {
               currentWord = currentWord + 1;
 
               //save current selection in prefs
-              for(var k = 0 ; k<colors.length; k ++) {
-                prefs.setStringList("colors_array_$k", colors[k].map((e) => e.toString()).toList());
+              for (var k = 0; k < colors.length; k++) {
+                prefs.setStringList("colors_array_$k",
+                    colors[k].map((e) => e.toString()).toList());
               }
-              for(var k = 0 ; k<characters.length; k ++) {
+              for (var k = 0; k < characters.length; k++) {
                 prefs.setStringList("characters_array_$k", characters[k]);
               }
-              prefs.setInt("current_word_restored",currentWord);
+              prefs.setInt("current_word_restored", currentWord);
               prefs.setBool("arrays_contains_junk", false);
             }
           }
