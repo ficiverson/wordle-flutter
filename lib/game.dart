@@ -8,6 +8,7 @@ import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.
 import 'package:flutter/material.dart';
 import 'package:wordleconvivientes/rae.dart';
 import 'package:wordleconvivientes/settings.dart';
+import 'package:wordleconvivientes/size.dart';
 import 'custom-layout.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   bool endGame = false;
   List<List<int>> colors = [];
   List<List<String>> characters = [];
+  SizeConfig sizeConfig = SizeConfig();
 
   final CustomLayoutKeys _customLayoutKeys = CustomLayoutKeys();
   late MediaQueryData queryData;
@@ -70,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    sizeConfig.init(context);
     queryData = MediaQuery.of(context);
     return loadingGame
         ? Container()
@@ -151,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         }, // Image tapped
                         child: Container(
                             margin: EdgeInsets.fromLTRB(
-                                queryData.size.width / 2 - 25, solution.length>4 ? Platform.isIOS ? 430.0 : 390.0 : Platform.isIOS ? 420 : 380.0, 0.0, 0.0),
+                                queryData.size.width / 2 - 25, solution.length>4 ? Platform.isIOS ? sizeConfig.blockSizeVertical * 54  : sizeConfig.blockSizeVertical * 52 : Platform.isIOS ? sizeConfig.blockSizeVertical * 53 : sizeConfig.blockSizeVertical * 51, 0.0, 0.0),
                             height: 50,
                             child: Image.asset('xerion.png')))
                   ]),
@@ -182,11 +185,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget _getTopContainers() {
     return Container(
         color: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 10.0,
+        padding: EdgeInsets.fromLTRB(solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 0.0,
             solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 0.0),
         key: PageStorageKey<String>("grid"),
         width: queryData.size.width,
-        height: Platform.isIOS ? 480 : 440,
+        height: Platform.isIOS ? sizeConfig.blockSizeVertical * 59 : sizeConfig.blockSizeVertical * 59,
         child: GridView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: solution.length * (solution.length + 1),
@@ -245,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return Container(
       color: Colors.transparent,
       child: VirtualKeyboard(
-          height: 160,
+          height: sizeConfig.blockSizeVertical * 20,
           width: queryData.size.width - 20,
           textColor: Colors.white,
           textController: _controllerText,

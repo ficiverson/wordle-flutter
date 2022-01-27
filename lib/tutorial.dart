@@ -22,7 +22,7 @@ class _TutorialPageState extends State<TutorialPage> {
   final _pageCtrl = PageController();
   int pageCount = 6;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
+  double iconSize = 0.0;
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _TutorialPageState extends State<TutorialPage> {
   @override
   Widget build(BuildContext context) {
     queryData = MediaQuery.of(context);
+    iconSize = queryData.size.width/2;
     return _getTutorial(widget.onlyAccount);
   }
 
@@ -62,7 +63,7 @@ class _TutorialPageState extends State<TutorialPage> {
           );
         },
       ),
-      pages: onlyAccount ? onboardingPagesListAccount : onboardingPagesList,
+      pages: onlyAccount ? onboardingPagesListAccount() : onboardingPagesList(),
       isSkippable: false,
       indicator: Indicator(
           indicatorDesign: IndicatorDesign.polygon(
@@ -72,13 +73,13 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
 
-  final onboardingPagesListAccount = [
-    PageModel(
+  List<PageModel> onboardingPagesListAccount() { return
+     [PageModel(
       widget: Column(
         children: [
           Container(
-              height: 300,
-              width: 300,
+              height: iconSize,
+              width: iconSize,
               padding: EdgeInsets.only(top: 20.0),
               child: Image.asset('assets/xerion.png')),
           SizedBox(height: 15),
@@ -107,14 +108,14 @@ class _TutorialPageState extends State<TutorialPage> {
         ],
       ),
     )
-  ];
+  ];}
 
-  final onboardingPagesList = [
+  List<PageModel> onboardingPagesList() { return [
     PageModel(
       widget: Column(
         children: [
           Container(
-              height: 300,
+              height: iconSize,
               padding: EdgeInsets.only(top: 20.0),
               child: Image.asset('assets/final1.png')),
           SizedBox(height: 15),
@@ -146,7 +147,7 @@ class _TutorialPageState extends State<TutorialPage> {
         widget: Column(
           children: [
             Container(
-                height: 300,
+                height: iconSize,
                 padding: EdgeInsets.only(top: 20.0),
                 child: Image.asset('assets/final2.png')),
             SizedBox(height: 15),
@@ -177,7 +178,7 @@ class _TutorialPageState extends State<TutorialPage> {
       widget: Column(
         children: [
           Container(
-              height: 300,
+              height: iconSize,
               padding: EdgeInsets.only(top: 20.0),
               child: Image.asset('assets/final3.png')),
           SizedBox(height: 15),
@@ -209,8 +210,8 @@ class _TutorialPageState extends State<TutorialPage> {
       widget: Column(
         children: [
           Container(
-              height: 300,
-              width: 300,
+              height: iconSize,
+              width: iconSize,
               padding: EdgeInsets.only(top: 20.0),
               child: Image.asset('assets/xerion.png')),
           SizedBox(height: 15),
@@ -238,6 +239,7 @@ class _TutorialPageState extends State<TutorialPage> {
       ),
     )
   ];
+  }
 
   _checkSignInStatus() async {
     await GamesServices.signIn();

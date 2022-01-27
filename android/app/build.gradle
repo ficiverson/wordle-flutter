@@ -45,17 +45,17 @@ android {
         applicationId "com.coruna.enjoy"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 1
+        versionCode 2
         versionName "1.0"
     }
 
     //flutter build appbundle
     signingConfigs {
         release {
-            keyAlias "********"
-            keyPassword "1***"
-            storeFile file("/path/keystore")
-            storePassword "1****"
+            keyAlias "***"
+            keyPassword "***"
+            storeFile file("/keystore_xerion")
+            storePassword "***"
         }
     }
     buildTypes {
