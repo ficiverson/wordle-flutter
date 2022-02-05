@@ -45,6 +45,7 @@ const List<List> _characters = [
     'H',
     'K',
     'L',
+    'Ñ',
     '',
   ],
   // Row 3

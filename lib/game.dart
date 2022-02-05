@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             : 0;
         if (currentDayPlaying < _dayOfTheyear()) {
           prefs.setBool("arrays_contains_junk", true);
+          prefs.setInt("current_day_playing", _dayOfTheyear());
           _initTheGame();
         }
         break;
@@ -99,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   ),
                   onPressed: () async {
                     Share.share(
-                        "¿Conoces el reto de Xerión? \n\nhttps://fernandosouto.dev/xerion.html \n\n🟦🟦🟦🟦🟦🟦🟦🟦🟦\n🟦🟦⬜⬜⬜⬜⬜🟦🟦\n🟦⬜⬜⬜⬜⬜⬜⬜🟦\n🟦⬜🟦⬜⬜⬜🟦⬜🟦\n🟦⬜⬜⬜🟦⬜⬜⬜🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦🟦🟦🟦⬜🟦🟦🟦🟦\n🟦🟦⬜⬜🟦⬜⬜🟦🟦\n🟦⬜🟦🟦🟦🟦🟦⬜🟦\n🟦🟦🟦🟦🟦🟦🟦🟦🟦");
+                        "¿Conoces el reto de Xerión? \n\nhttps://fernandosouto.dev/xerion.html \n\n🟦🟦🟦🟦🟦🟦🟦🟦🟦\n🟦🟦⬜⬜⬜⬜⬜🟦🟦\n🟦⬜⬜⬜⬜⬜⬜⬜🟦\n🟦⬜🟦⬜⬜⬜🟦⬜🟦\n🟦⬜⬜⬜🟦⬜⬜⬜🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦⬜⬜⬜🟦🟦🟦\n🟦🟦🟦🟦🟦🟦🟦🟦🟦");
                   },
                 ),
                 IconButton(
@@ -291,7 +292,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       }
       final SharedPreferences prefs = await _prefs;
       canPlay = prefs.getInt("last_day_played") != _dayOfTheyear();
-      prefs.setInt("current_day_playing", _dayOfTheyear());
       bool restored = false;
       //restore previous game
       if (prefs.getBool("arrays_contains_junk") == false && canPlay) {
@@ -336,7 +336,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       if (!restored) {
         canPlay
             ? _showAlert(context, DialogType.INFO, "Vamos a jugar",
-                "Adivina la palabra del hoy")
+                "Adivina la palabra de hoy")
             : _showAlert(context, DialogType.INFO, "Hoy ya jugaste",
                 "Tendrás que volver mañana para seguir jugando");
       }
