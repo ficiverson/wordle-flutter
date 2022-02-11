@@ -1,7 +1,7 @@
 final List<String> rae = [
-  "neno"
+  "words"
 ];
 
 final List<String> raeXerion = [
-  "Chico"
+  "complete a year of hints"
 ];

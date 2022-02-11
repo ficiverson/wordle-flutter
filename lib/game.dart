@@ -58,8 +58,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             ? prefs.getInt("current_day_playing")!
             : 0;
         if (currentDayPlaying < _dayOfTheyear()) {
-          prefs.setBool("arrays_contains_junk", true);
-          prefs.setInt("current_day_playing", _dayOfTheyear());
           _initTheGame();
         }
         break;
@@ -293,6 +291,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       final SharedPreferences prefs = await _prefs;
       canPlay = prefs.getInt("last_day_played") != _dayOfTheyear();
       bool restored = false;
+
+      //clear if we have previous data
+      int currentDayPlaying = prefs.getInt("current_day_playing") != null
+          ? prefs.getInt("current_day_playing")!
+          : 0;
+      print(canPlay);
+      print(currentDayPlaying);
+      print(_dayOfTheyear());
+      print(prefs.getBool("arrays_contains_junk"));
+      if (currentDayPlaying < _dayOfTheyear()) {
+        prefs.setBool("arrays_contains_junk", true);
+      }
+
       //restore previous game
       if (prefs.getBool("arrays_contains_junk") == false && canPlay) {
         colors.clear();
@@ -473,6 +484,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               currentWord = currentWord + 1;
 
               //save current selection in prefs
+              prefs.setInt("current_day_playing", _dayOfTheyear());
               for (var k = 0; k < colors.length; k++) {
                 prefs.setStringList("colors_array_$k",
                     colors[k].map((e) => e.toString()).toList());

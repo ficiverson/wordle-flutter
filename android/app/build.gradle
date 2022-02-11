@@ -45,11 +45,11 @@ android {
         applicationId "com.coruna.enjoy"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.2"
     }
 
-    //flutter build appbundle
+    //flutter build appbundle --no-sound-null-safety
     signingConfigs {
         release {
             keyAlias "****"
