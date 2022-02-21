@@ -296,10 +296,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       int currentDayPlaying = prefs.getInt("current_day_playing") != null
           ? prefs.getInt("current_day_playing")!
           : 0;
-      print(canPlay);
-      print(currentDayPlaying);
-      print(_dayOfTheyear());
-      print(prefs.getBool("arrays_contains_junk"));
       if (currentDayPlaying < _dayOfTheyear()) {
         prefs.setBool("arrays_contains_junk", true);
       }
@@ -461,7 +457,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               if (solution.isNotEmpty &&
                   correct.entries.length == solution.length) {
                 _checkSignInStatus();
-                currentScore = currentScore + 100;
+                currentScore = currentScore + _getBalancedPoints(currentScore);
                 prefs.setInt("current_score", currentScore);
                 await GamesServices.submitScore(
                     score: Score(
@@ -502,5 +498,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     }
     // Update the screen
     setState(() {});
+  }
+
+
+   int _getBalancedPoints(int currentScore) {
+    int today = _dayOfTheyear();
+    int points = 100;
+
+    int boostValue = (300 * (today) * 0.25).round();
+    int realResult = (100 * (solution.length - currentWord + 1)).round();
+    if(currentScore < boostValue) {
+      points = (boostValue / 2).round();
+    } else {
+      points = realResult;
+    }
+    return points;
   }
 }
