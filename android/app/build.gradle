@@ -45,8 +45,8 @@ android {
         applicationId "com.coruna.enjoy"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.3"
     }
 
     //flutter build appbundle --no-sound-null-safety
