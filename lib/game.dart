@@ -153,7 +153,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         }, // Image tapped
                         child: Container(
                             margin: EdgeInsets.fromLTRB(
-                                queryData.size.width / 2 - 25, solution.length>4 ? Platform.isIOS ? sizeConfig.blockSizeVertical * 54  : sizeConfig.blockSizeVertical * 52 : Platform.isIOS ? sizeConfig.blockSizeVertical * 53 : sizeConfig.blockSizeVertical * 51, 0.0, 0.0),
+                                queryData.size.width / 2 - 25,
+                                solution.length > 4
+                                    ? Platform.isIOS
+                                        ? sizeConfig.blockSizeVertical * 54
+                                        : sizeConfig.blockSizeVertical * 52
+                                    : Platform.isIOS
+                                        ? sizeConfig.blockSizeVertical * 53
+                                        : sizeConfig.blockSizeVertical * 51,
+                                0.0,
+                                0.0),
                             height: 50,
                             child: Image.asset('xerion.png')))
                   ]),
@@ -184,11 +193,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget _getTopContainers() {
     return Container(
         color: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 0.0,
-            solution.length == 3 ? 90.0 : solution.length == 4 ? 70.0 : 40.0, 0.0),
+        padding: EdgeInsets.fromLTRB(
+            solution.length == 3
+                ? 90.0
+                : solution.length == 4
+                    ? 70.0
+                    : 40.0,
+            0.0,
+            solution.length == 3
+                ? 90.0
+                : solution.length == 4
+                    ? 70.0
+                    : 40.0,
+            0.0),
         key: PageStorageKey<String>("grid"),
         width: queryData.size.width,
-        height: Platform.isIOS ? sizeConfig.blockSizeVertical * 59 : sizeConfig.blockSizeVertical * 59,
+        height: Platform.isIOS
+            ? sizeConfig.blockSizeVertical * 59
+            : sizeConfig.blockSizeVertical * 59,
         child: GridView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: solution.length * (solution.length + 1),
@@ -500,14 +522,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     setState(() {});
   }
 
-
-   int _getBalancedPoints(int currentScore) {
+  int _getBalancedPoints(int currentScore) {
     int today = _dayOfTheyear();
     int points = 100;
 
     int boostValue = (300 * (today) * 0.25).round();
     int realResult = (100 * (solution.length - currentWord + 1)).round();
-    if(currentScore < boostValue) {
+    if (currentScore < boostValue) {
       points = (boostValue / 2).round();
     } else {
       points = realResult;

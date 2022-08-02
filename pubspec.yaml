@@ -14,13 +14,13 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   virtual_keyboard_multi_language: ^0.2.4
-  awesome_dialog: ^2.1.2
-  games_services: ^2.0.2
+  awesome_dialog: ^2.2.1
+  games_services: ^2.0.8
   onboarding: ^2.1.0
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.0.15
   loading: ^1.0.2
   share: ^2.0.4
-  flutter_html: ^3.0.0-alpha.2
+  flutter_html: ^3.0.0-alpha.5
 
 dev_dependencies:
   flutter_test:
