@@ -144,7 +144,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                               prefs.getInt("current_score") != null
                                   ? prefs.getInt("current_score")!
                                   : 0;
-                          prefs.setInt("current_score", currentScore - 75);
+                          prefs.setInt("current_score",
+                              currentScore - (75 * solution.length));
                           _showAlert(
                               context,
                               DialogType.QUESTION,
@@ -529,7 +530,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     int boostValue = (300 * (today) * 0.25).round();
     int realResult = (100 * (solution.length - currentWord + 1)).round();
     if (currentScore < boostValue) {
-      points = (boostValue / 2).round();
+      points = boostValue;
     } else {
       points = realResult;
     }
